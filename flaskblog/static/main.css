@@ -78,3 +78,65 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+
+.avatar-img {
+  width: 30px;
+  height: 30px;
+}
+
+.avatar-header {
+  margin-left: 4px;
+}
+
+.navbar-toggler {
+  border: 0;
+}
+
+.nav-container-fluid {
+  padding: 0;
+}
+
+.newpost {
+  margin-right: 8px;
+}
+
+.userlink {
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
+.postlink {
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
+.mainlink {
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+
+@media only screen and (max-width: 767px) {
+  .nav-dropdown {
+    display: none;
+  }
+  .nav-dropdown-menu {
+    display:block;
+        position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .dropdown-item {
+    color: rgba(255,255,255,1);
+  }
+  .dropdown-nav-bar {
+    margin-right: 0px;
+  }
+}
