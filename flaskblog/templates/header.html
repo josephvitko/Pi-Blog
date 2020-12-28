@@ -18,7 +18,9 @@
                 <div class="collapse navbar-collapse" id="navbarToggleUser">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle userlink nav-dropdown" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" class="rounded-circle avatar-img">
+                            <div class="avatar-img-container">
+                                <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" class="rounded-circle avatar-img">
+                            </div>
                             <span class="nav-text avatar-header">{{ current_user.username }}</span>
                         </a>
                         <ul class="dropdown-menu nav-dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -35,7 +37,9 @@
                 </button>
                 <button class="navbar-toggler userlink" type="button" data-toggle="collapse" data-target="#navbarToggleUser" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="sr-only">Toggle navigation</span>
-                    <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" class="rounded-circle avatar-img">
+                    <div class="avatar-img-container">
+                        <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" class="rounded-circle avatar-img">
+                    </div>
                 </button>
                 <button class="navbar-toggler mainlink" type="button" data-toggle="collapse" data-target="#navbarToggleMain" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

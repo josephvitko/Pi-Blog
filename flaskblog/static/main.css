@@ -79,9 +79,15 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-.avatar-img {
+.avatar-img-container {
   width: 30px;
-  height: 30px;
+  height: auto;
+  display: inline-block;
+}
+
+.avatar-img {
+  width: 100%;
+  height: auto;
 }
 
 .avatar-header {
