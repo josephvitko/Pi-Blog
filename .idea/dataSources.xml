@@ -7,11 +7,5 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\Joseph\PycharmProjects\flask_blog\site.db</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="site [2]" uuid="dda7dba2-9c3b-45e2-baca-ce6ed450fc3e">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Joseph\PycharmProjects\flask_blog\flaskblog\site.db</jdbc-url>
-    </data-source>
   </component>
 </project>
