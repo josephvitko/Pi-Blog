@@ -1,7 +1,49 @@
 {% extends "layout.html" %}
+{% block topsection %}
+    <section class="hero-section">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-5">
+                            <div class="mt-md-4">
+                                <div>
+                                    <span class="text-white-50 ml-1">Welcome to </span>
+                                </div>
+                                <h2 class="text-black font-weight-normal mb-4 mt-3 hero-title">Projects by <br>Joseph Vitko</h2>
+                                <p class="mb-4 font-16 text-white-50">
+                                    This website is a showcase and hosting location for my personal projects.
+                                </p>
+                                <div class="text-center">
+                                    <a href="{{ url_for('main.blog') }}" class="btn btn-block btn-success">My blog <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 offset-md-2">
+                            <div class="text-center mt-3 mt-md-0">
+                                <img src="static/images/illustration.svg" alt="" class="img-fluid hero-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mt-4">
+                    <h4 class="text-center">Top Projects</h4>
+                    <ul class="list-group ml-4 mr-4"><p class="text-muted text-center">Some of my highlights</p>
+                        <li class="list-group-item list-group-item-light ml-4 mr-4 text-center">Alu Algae</li>
+                        <li class="list-group-item list-group-item-light ml-4 mr-4 text-center">BudgetR</li>
+                        <li class="list-group-item list-group-item-light ml-4 mr-4 text-center">Investing</li>
+                    </ul>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <h4 style="margin-bottom: 20px">Recent Updates</h4>
+{% endblock topsection %}
 {% block content %}
-    <h1>Home Page</h1>
-    {% for post in posts.items %}
+    {% for post in posts %}
         <article class="media content-section">
             <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
             <div class="media-body">
@@ -14,15 +56,7 @@
           </div>
         </article>
     {% endfor %}
-    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-        {% if page_num %}
-            {% if posts.page == page_num %}
-            <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
-            {% else %}
-            <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
-            {% endif %}
-        {% else %}
-        ...
-        {% endif %}
-    {% endfor %}
+    <div class="text-center">
+        <a href="{{ url_for('main.blog') }}" class="btn btn-info" style="margin-bottom: 20px">View More <i class="fas fa-arrow-right"></i></a>
+    </div>
 {% endblock content %}

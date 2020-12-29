@@ -74,7 +74,7 @@ def user_posts(username):
     posts = Post.query.filter_by(author=user). \
         order_by(Post.date_posted.desc()) \
         .paginate(per_page=5)
-    return render_template('user_posts.html', posts=posts, page=page, user=user)
+    return render_template('user_posts.html', posts=posts, page=page, user=user, page_context='users.user_posts')
 
 
 @users.route('/reset_password', methods=['GET', 'POST'])
