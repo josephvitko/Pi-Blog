@@ -116,6 +116,15 @@ a.article-title:hover {
   padding-top: 0;
   padding-bottom: 0;
   vertical-align: middle;
+  padding-right: 0;
+}
+
+.userlinkbutton {
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+  padding-right: 0;
+  display: none;
 }
 
 .postlink {
@@ -128,6 +137,14 @@ a.article-title:hover {
   padding-top: 0;
   padding-bottom: 0;
   vertical-align: middle;
+}
+
+.user-btn {
+  padding: 0;
+}
+
+.user-btn::after {
+  color: rgba(255,255,255,.5)
 }
 
 .btn-success {
@@ -154,13 +171,18 @@ a.article-title:hover {
     -webkit-box-shadow: none;
     box-shadow: none;
   }
-  .dropdown-item {
-    color: rgba(255,255,255,1);
-  }
   .dropdown-nav-bar {
     margin-right: 0px;
   }
   .hero-image {
     max-width: 75%;
+    margin-bottom: 1.5rem;
+  }
+  .hero-section {
+    padding-bottom: 60px;
+    padding-top: 40px;
+  }
+  .userlinkbutton {
+    display: inline-block;
   }
 }
