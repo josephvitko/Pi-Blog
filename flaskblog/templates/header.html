@@ -2,64 +2,73 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
             <!-- Navbar Left Side -->
-            <a class="navbar-brand mr-4" href="/">Flask Blog</a>
+            <a class="navbar-brand mr-4" href="/">Joseph Vitko</a>
+            <div>
+                {% if current_user.is_authenticated %}
+                    <button class="navbar-toggler postlink" type="button" data-toggle="collapse" data-target="#navbarTogglePost" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                        <a href="{{ url_for('posts.new_post') }}" style="color:inherit"><i class="fas fa-comment-alt"></i></a>
+                    </button>
+                    <div class="dropdown navbar-toggler userlinkbutton" data-toggle="collapse" data-target="#navbarToggleUser" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                      <button class="btn bg-transparent dropdown-toggle user-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="avatar-img-container">
+                            <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" class="rounded-circle avatar-img">
+                        </div>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="{{ url_for('users.user_posts', username=current_user.username) }}"><i class="fas fa-user-circle"></i> My Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('users.account') }}"><i class="fas fa-cog"></i> Settings</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('users.logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+                      </div>
+                    </div>
+                    <button class="navbar-toggler mainlink" type="button" data-toggle="collapse" data-target="#navbarToggleMain" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                {% else %}
+                    <button class="navbar-toggler userlink" type="button" data-toggle="collapse" data-target="#navbarToggleAnon" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <button class="navbar-toggler mainlink" type="button" data-toggle="collapse" data-target="#navbarToggleMain" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+               {% endif %}
+            </div>
             <div class="collapse navbar-collapse" id="navbarToggleMain">
                 <div class="navbar-nav mr-auto">
-                  <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
+                  <a class="nav-item nav-link" href="{{ url_for('main.blog') }}">Blog</a>
                   <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
                 </div>
             </div>
             <!-- Navbar Right Side -->
             {% if current_user.is_authenticated %}
-            <div class="navbar-nav dropdown-nav-bar">
-                <div class="collapse navbar-collapse newpost" id="navbarTogglePost">
-                    <a class="nav-item nav-link postlink nav-dropdown" href="{{ url_for('posts.new_post') }}"><i class="fas fa-comment-alt"></i> New Post</a>
-                </div>
-                <div class="collapse navbar-collapse" id="navbarToggleUser">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle userlink nav-dropdown" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="avatar-img-container">
-                                <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" class="rounded-circle avatar-img">
-                            </div>
-                            <span class="nav-text avatar-header">{{ current_user.username }}</span>
-                        </a>
-                        <ul class="dropdown-menu nav-dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="{{ url_for('users.user_posts', username=current_user.username) }}"><i class="fas fa-user-circle"></i> My Profile</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('users.account') }}"><i class="fas fa-cog"></i> Settings</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('users.logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-                        </ul>
-                    </li>
-                </div>
-            </div>
-            <div>
-                <button class="navbar-toggler postlink" type="button" data-toggle="collapse" data-target="#navbarTogglePost" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <a href="{{ url_for('posts.new_post') }}" style="color:inherit"><i class="fas fa-comment-alt"></i></a>
-                </button>
-                <button class="navbar-toggler userlink" type="button" data-toggle="collapse" data-target="#navbarToggleUser" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="sr-only">Toggle navigation</span>
-                    <div class="avatar-img-container">
-                        <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" class="rounded-circle avatar-img">
+                <div class="collapse navbar-collapse justify-content-end">
+                    <div class="navbar-nav">
+                        <div class="collapse navbar-collapse newpost" id="navbarTogglePost">
+                            <a class="nav-item nav-link postlink nav-dropdown" href="{{ url_for('posts.new_post') }}"><i class="fas fa-comment-alt"></i> New Post</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbarToggleUser">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle userlink nav-dropdown" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="avatar-img-container">
+                                        <img src="{{ url_for('static', filename='profile_pics/' + current_user.image_file) }}" class="rounded-circle avatar-img">
+                                    </div>
+                                    <span class="nav-text avatar-header">{{ current_user.username }}</span>
+                                </a>
+                                <ul class="dropdown-menu nav-dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="{{ url_for('users.user_posts', username=current_user.username) }}"><i class="fas fa-user-circle"></i> My Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('users.account') }}"><i class="fas fa-cog"></i> Settings</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('users.logout') }}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+                        </div>
                     </div>
-                </button>
-                <button class="navbar-toggler mainlink" type="button" data-toggle="collapse" data-target="#navbarToggleMain" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            {% else %}
-            <div class="navbar-nav dropdown-nav-bar">
-                <div class="collapse navbar-collapse" id="navbarToggleAnon">
-                    <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
-                    <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
                 </div>
-            </div>
-            <div>
-                <button class="navbar-toggler userlink" type="button" data-toggle="collapse" data-target="#navbarToggleAnon" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-user-circle"></i>
-                </button>
-                <button class="navbar-toggler mainlink" type="button" data-toggle="collapse" data-target="#navbarToggleMain" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
+            {% else %}
+                <div class="collapse navbar-collapse justify-content-end" id="navbarToggleAnon">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
+                    </div>
+                </div>
             {% endif %}
         </div>
     </nav>
