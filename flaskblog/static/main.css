@@ -148,12 +148,24 @@ a.article-title:hover {
 }
 
 .btn-success {
-  background-color: #28a745;
-  border-color: #28a745;
+  background-color: #5aa96d;
+  border-color: #5aa96d;
   /*
   -webkit-box-shadow: 0 2px 6px 0 rgba(10,207,151,.5);
   box-shadow: 0 2px 6px 0 rgba(10,207,151,.5);
    */
+}
+
+.text-success {
+  color: #5aa96d!important;
+}
+
+.text-primary {
+  color: #7a9caf!important;
+}
+
+.text-info {
+  color: #2d4464!important;
 }
 
 @media only screen and (max-width: 767px) {
