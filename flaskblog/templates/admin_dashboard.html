@@ -1,0 +1,15 @@
+{% extends "layout_admin.html" %}
+{% block midsection %}
+    <h2>Admin Dashboard:</h2>
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">View:</legend>
+        <a href="{{ url_for('admin.getusers') }}" class="btn btn-block btn-primary">Users</a>
+        <a href="{{ url_for('admin.getposts') }}" class="btn btn-block btn-primary">Posts</a>
+        <a href="{{ url_for('admin.getroles') }}" class="btn btn-block btn-primary">Roles</a>
+    </fieldset>
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Database Actions (be careful):</legend>
+        <a href="{{ url_for('admin.createall') }}" class="btn btn-block btn-primary">db Create All</a>
+        <a href="{{ url_for('admin.dropall') }}" class="btn btn-block btn-primary">db Drop All</a>
+    </fieldset>
+{% endblock midsection %}

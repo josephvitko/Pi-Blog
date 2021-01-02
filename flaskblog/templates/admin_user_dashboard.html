@@ -1,0 +1,48 @@
+{% extends "layout_admin.html" %}
+{% block midsection %}
+    <h2>Admin Actions:</h2>
+    <div class="content-section">
+        <div class="media">
+            <img class="rounded-circle account-img" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}" alt="profile_pic">
+            <div class="media-body">
+                <h2 class="account-heading">{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">User Permissions</legend>
+            {% if user.roles|length == 0 %}
+                <span class="text-danger">User has no permissions</span>
+            {% else %}
+                {% for role in user.roles %}
+                    <span class="text-success">{{ role }}</span>
+                    <a role="button" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Revoke Role" href="{{ url_for('admin.revokerole', user=user.username, role=role.name) }}">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                {% endfor %}
+            {% endif %}
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">{{ legend }}</legend>
+                    <div class="form-group">
+                        {{ form.name.label(class="form-control-label") }}
+                        {% if form.name.errors %}
+                            {{ form.name(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.name(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </fieldset>
+    </div>
+{% endblock midsection %}
