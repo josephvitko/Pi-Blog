@@ -51,8 +51,6 @@ def getroles():
     form = RoleForm()
     if form.validate_on_submit():
         return redirect(url_for('admin.newrole', name=form.name.data))
-    else:
-        flash('Role is invalid', 'danger')
     roles = Role.query.paginate(per_page=25)
     return render_template('admin_roles_dashboard.html', roles=roles, form=form, page_context='admin.getroles')
 
@@ -88,8 +86,6 @@ def viewuser(user):
     form = RoleForm()
     if form.validate_on_submit():
         return redirect(url_for('admin.assignrole', role=form.name.data, user=user.username))
-    else:
-        flash('Role is invalid', 'danger')
     return render_template('admin_user_dashboard.html', user=user, roles=roles, form=form)
 
 
@@ -102,8 +98,9 @@ def viewroles(user):
 @admin.route('/admin/users/<string:user>/posts')
 def getuserposts(user):
     user = User.query.filter_by(username=user).first()
-    posts = Post.query.filter_by(user_id=user.id).order_by(Post.date_posted.desc()).limit(25).all()
-    return str(posts)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(user_id=user.id).order_by(Post.date_posted.desc()).paginate(per_page=25)
+    return render_template('admin_posts_dashboard.html', posts=posts, page=page, page_context='admin.getposts')
 
 
 @admin.route('/admin/users/<string:user>/roles/assign/<string:role>', methods=['GET', 'POST'])
