@@ -4,12 +4,14 @@ from flask_login import current_user, login_required
 from flaskblog import db
 from flaskblog.models import Post
 from flaskblog.posts.forms import PostForm
+from flaskblog.permissions import post_permission
 
 posts = Blueprint('posts', __name__)
 
 
 @posts.route('/post/new', methods=['GET', 'POST'])
 @login_required
+@post_permission.require(http_exception=403)
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
@@ -30,6 +32,7 @@ def post(post_id):
 
 @posts.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required
+@post_permission.require(http_exception=403)
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
@@ -50,6 +53,7 @@ def update_post(post_id):
 
 @posts.route('/post/<int:post_id>/delete', methods=['POST'])
 @login_required
+@post_permission.require(http_exception=403)
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:

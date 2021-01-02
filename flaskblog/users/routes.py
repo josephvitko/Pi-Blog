@@ -1,11 +1,12 @@
 from flask import (Blueprint, render_template, url_for,
-                   flash, redirect, request)
+                   flash, redirect, request, current_app, session)
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskblog import db, bcrypt
 from flaskblog.models import User, Post
 from flaskblog.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm)
 from flaskblog.users.utils import save_picture, send_reset_email
+from flask_principal import Identity, AnonymousIdentity, identity_changed, identity_loaded, UserNeed, RoleNeed
 
 users = Blueprint('users', __name__)
 
@@ -34,6 +35,9 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
+            # flask principal
+            identity_changed.send(current_app._get_current_object(),
+                                  identity=Identity(user.id))
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
@@ -44,6 +48,11 @@ def login():
 @users.route('/logout')
 def logout():
     logout_user()
+    # flask_principal
+    for key in ('identity.name', 'identity.auth_type'):
+        session.pop(key, None)
+    identity_changed.send(current_app._get_current_object(),
+                          identity=AnonymousIdentity())
     return redirect(url_for('main.home'))
 
 

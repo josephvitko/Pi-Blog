@@ -2,16 +2,19 @@ from flask import Blueprint, render_template, request, flash, url_for, redirect
 from flaskblog import db
 from flaskblog.models import User, Role, UserRoles, Post
 from flaskblog.admin.forms import RoleForm
+from flaskblog.permissions import admin_permission
 
 admin = Blueprint('admin', __name__)
 
 
 @admin.route('/admin')
+@admin_permission.require(http_exception=403)
 def admin_dashboard():
     return render_template('admin_dashboard.html')
 
 
 @admin.route('/admin/db/createall', methods=['GET', 'POST'])
+@admin_permission.require(http_exception=403)
 def createall():
     db.create_all()
     flash('Database models created', "success")
@@ -19,6 +22,7 @@ def createall():
 
 
 @admin.route('/admin/db/dropall')
+@admin_permission.require(http_exception=403)
 def dropall():
     db.drop_all()
     flash('Database data dropped', "success")
@@ -26,6 +30,7 @@ def dropall():
 
 
 @admin.route('/admin/posts')
+@admin_permission.require(http_exception=403)
 def getposts():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=25)
@@ -33,12 +38,14 @@ def getposts():
 
 
 @admin.route('/admin/posts/<int:id>')
+@admin_permission.require(http_exception=403)
 def viewpost(id):
     post = Post.query.filter_by(id=id).first()
     return str(post)
 
 
 @admin.route('/admin/posts/<int:id>/remove')
+@admin_permission.require(http_exception=403)
 def removepost(id):
     Post.query.filter_by(id=id).delete()
     db.session.commit()
@@ -47,6 +54,7 @@ def removepost(id):
 
 
 @admin.route('/admin/roles', methods=['GET', 'POST'])
+@admin_permission.require(http_exception=403)
 def getroles():
     form = RoleForm()
     if form.validate_on_submit():
@@ -56,6 +64,7 @@ def getroles():
 
 
 @admin.route('/admin/roles/new/<string:name>', methods=['GET', 'POST'])
+@admin_permission.require(http_exception=403)
 def newrole(name):
     nr = Role(name=name)
     db.session.add(nr)
@@ -65,6 +74,7 @@ def newrole(name):
 
 
 @admin.route('/admin/roles/drop/<string:name>')
+@admin_permission.require(http_exception=403)
 def droprole(name):
     Role.query.filter_by(name=name).delete()
     db.session.commit()
@@ -73,6 +83,7 @@ def droprole(name):
 
 
 @admin.route('/admin/users')
+@admin_permission.require(http_exception=403)
 def getusers():
     page = request.args.get('page', 1, type=int)
     users = User.query.order_by(User.id.asc()).paginate(per_page=25)
@@ -80,6 +91,7 @@ def getusers():
 
 
 @admin.route('/admin/users/<string:user>', methods=['GET', 'POST'])
+@admin_permission.require(http_exception=403)
 def viewuser(user):
     user = User.query.filter_by(username=user).first()
     roles = Role.query.all()
@@ -90,12 +102,14 @@ def viewuser(user):
 
 
 @admin.route('/admin/users/<string:user>/roles')
+@admin_permission.require(http_exception=403)
 def viewroles(user):
     user = User.query.filter_by(username=user).first()
     return str(user.roles)
 
 
 @admin.route('/admin/users/<string:user>/posts')
+@admin_permission.require(http_exception=403)
 def getuserposts(user):
     user = User.query.filter_by(username=user).first()
     page = request.args.get('page', 1, type=int)
@@ -104,6 +118,7 @@ def getuserposts(user):
 
 
 @admin.route('/admin/users/<string:user>/roles/assign/<string:role>', methods=['GET', 'POST'])
+@admin_permission.require(http_exception=403)
 def assignrole(user, role):
     user = User.query.filter_by(username=user).first()
     role = Role.query.filter_by(name=role).first()
@@ -118,6 +133,7 @@ def assignrole(user, role):
 
 
 @admin.route('/admin/users/<string:user>/roles/revoke/<string:role>')
+@admin_permission.require(http_exception=403)
 def revokerole(user, role):
     user = User.query.filter_by(username=user).first()
     role = Role.query.filter_by(name=role).first()
