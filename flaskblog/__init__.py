@@ -5,6 +5,7 @@ from flask_login import LoginManager, current_user
 from flask_mail import Mail
 from flaskblog.config import Config
 from flask_principal import Principal, identity_loaded, UserNeed, RoleNeed
+from flask_restful import Api
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -12,6 +13,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 mail = Mail()
+rest_api = Api()
 
 
 def create_app(config_class=Config):
@@ -29,13 +31,19 @@ def create_app(config_class=Config):
     from flaskblog.main.routes import main
     from flaskblog.api.routes import api
     from flaskblog.admin.routes import admin
+    from flaskblog.weather_data.routes import weather_data, DataAPI, SensorAPI
     from flaskblog.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(api)
     app.register_blueprint(admin)
+    app.register_blueprint(weather_data)
     app.register_blueprint(errors)
+
+    rest_api.add_resource(DataAPI, '/api/weather_data')
+    rest_api.add_resource(SensorAPI, '/api/sensor')
+    rest_api.init_app(app)
 
     @identity_loaded.connect_via(app)
     def on_identity_loaded(sender, identity):

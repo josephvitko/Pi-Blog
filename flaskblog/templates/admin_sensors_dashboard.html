@@ -1,0 +1,66 @@
+{% extends "layout_admin.html" %}
+{% block midsection %}
+    <h1>Sensor Dashboard</h1>
+    <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+                <div class="form-group">
+                    {{ form.name.label(class="form-control-label") }}
+                    {% if form.name.errors %}
+                        {{ form.name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.unit.label(class="form-control-label") }}
+                    {% if form.unit.errors %}
+                        {{ form.unit(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.unit.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.unit(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sensor</th>
+                <th>Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sensor in sensors.items %}
+                <tr>
+                    <td>{{ sensor.name }}</td>
+                    <td>{{ sensor.unit }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% for page_num in sensors.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if sensors.page == page_num %}
+                <a class="btn btn-primary mb-4" href="{{ url_for(page_context, page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for(page_context, page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+    {% endfor %}
+{% endblock midsection %}

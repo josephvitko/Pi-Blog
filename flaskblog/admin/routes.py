@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, flash, url_for, redirect
 from flaskblog import db
 from flaskblog.models import User, Role, UserRoles, Post
-from flaskblog.admin.forms import RoleForm
+from flaskblog.admin.forms import RoleForm, SensorForm
 from flaskblog.permissions import admin_permission
+from flaskblog.weather_data.models import Sensor, Data
 
 admin = Blueprint('admin', __name__)
 
@@ -141,3 +142,18 @@ def revokerole(user, role):
     db.session.commit()
     flash('Role has been revoked', 'success')
     return redirect(url_for('admin.viewuser', user=user.username))
+
+
+@admin.route('/admin/sensors', methods=['GET', 'POST'])
+@admin_permission.require(http_exception=403)
+def getsensors():
+    form = SensorForm()
+    if form.validate_on_submit():
+        sensor = Sensor(name=form.name.data, unit=form.unit.data)
+        db.session.add(sensor)
+        db.session.commit()
+        flash('Sensor created', 'success')
+        return redirect(url_for('admin.getsensors'))
+    sensors = Sensor.query.paginate(per_page=25)
+    page = request.args.get('page', 1, type=int)
+    return render_template('admin_sensors_dashboard.html', sensors=sensors, page=page, form=form, page_context='admin.getsensors')
