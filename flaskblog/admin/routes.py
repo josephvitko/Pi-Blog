@@ -166,3 +166,23 @@ def getsensordata(sensor):
     data = Data.query.filter_by(sensor_id=sensor.id).order_by(Data.date_recorded.desc()).paginate(per_page=100)
     page = request.args.get('page', 1, type=int)
     return render_template('admin_data_dashboard.html', data=data, sensor=sensor, page=page, page_context='admin.getsensordata')
+
+
+@admin.route('/admin/sensors/<string:sensor>/delete')
+@admin_permission.require(http_exception=403)
+def deletesensor(sensor):
+    sensor = Sensor.query.filter_by(name=sensor).first()
+    Data.query.filter_by(sensor_id=sensor.id).delete()
+    Sensor.query.filter_by(name=sensor.name).delete()
+    db.session.commit()
+    flash('Sensor has been deleted', 'success')
+    return redirect(url_for('admin.getsensors'))
+
+
+@admin.route('/admin/sensors/<string:sensor>/<int:id>/delete')
+@admin_permission.require(http_exception=403)
+def deletesensordatum(id, sensor):
+    Data.query.filter_by(id=id).delete()
+    db.session.commit()
+    flash('Datum has been deleted', 'success')
+    return redirect(url_for('admin.getsensordata', sensor=sensor))

@@ -8,13 +8,13 @@ weather_data = Blueprint('weather_data', __name__)
 
 parser = reqparse.RequestParser()
 parser.add_argument('sensor_name', required=True, help="sensor name cannot be blank")
-parser.add_argument('value', type=float, required=True, help="value cannot be blank")
+parser.add_argument('value', type=float, required=True)
 
 
 class DataAPI(Resource):
     def post(self):
         args = parser.parse_args()
-        sensor = Sensor.query.filter_by(sensor_name=args['sensor_name']).first()
+        sensor = Sensor.query.filter_by(name=args['sensor_name']).first()
         value = args['value']
         data = Data(value=value, recorded_by=sensor)
         db.session.add(data)

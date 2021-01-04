@@ -41,6 +41,7 @@
             <tr>
                 <th>Sensor</th>
                 <th>Unit</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -48,6 +49,11 @@
                 <tr>
                     <td><a href="{{ url_for('admin.getsensordata', sensor=sensor.name) }}">{{ sensor.name }}</a></td>
                     <td>{{ sensor.unit }}</td>
+                    <td>
+                        <a role="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Drop Sensor" href="{{ url_for('admin.deletesensor', sensor=sensor.name) }}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
