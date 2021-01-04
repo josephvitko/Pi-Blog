@@ -1,8 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 from flaskblog import rest_api, db
 from flask_restful import Resource, reqparse
 from flaskblog.weather_data.models import Sensor, Data
-
 
 weather_data = Blueprint('weather_data', __name__)
 
@@ -38,3 +37,14 @@ class SensorAPI(Resource):
         db.session.commit()
         print('sensor created:', sensor)
         return name, 201
+
+
+@weather_data.route('/weather_data/temperature')
+def temperature():
+    temp_sensor = Sensor.query.filter_by(name='temperature').first()
+    temp_data = Data.query.filter_by(sensor_id=temp_sensor.id).all()
+    chart_data = []
+    for datum in temp_data:
+        entry = {'x': datum.date_recorded.strftime('%Y-%m-%d %H:%M:%S'), 'y': round(datum.value, 2)}
+        chart_data.append(entry)
+    return render_template('temperature_graph.html', chart_data=chart_data)

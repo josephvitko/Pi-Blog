@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import pytz
 from flaskblog import db
 
@@ -15,10 +15,9 @@ class Sensor(db.Model):
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date_recorded = db.Column(db.DateTime, nullable=False,
-                              default=datetime.datetime.now(pytz.timezone("America/New_York")))
+    date_recorded = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     value = db.Column(db.Float(50), nullable=False)
     sensor_id = db.Column(db.Integer, db.ForeignKey('sensor.id'), nullable=False)
 
     def __repr__(self):
-        return f"Data('{self.date_recorded}', '{self.title}', '{self.sensor_id}')"
+        return f"Data('{self.date_recorded}', '{self.value}', '{self.sensor_id}')"
