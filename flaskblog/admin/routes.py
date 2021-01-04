@@ -195,4 +195,4 @@ def clearsensordata(sensor):
     Data.query.filter_by(sensor_id=sensor.id).delete()
     db.session.commit()
     flash('Data has been cleared', 'success')
-    return redirect(url_for('admin.getsensordata', sensor=sensor))
+    return redirect(url_for('admin.getsensors'))
