@@ -39,12 +39,12 @@ class SensorAPI(Resource):
         return name, 201
 
 
-@weather_data.route('/weather_data/temperature')
-def temperature():
-    temp_sensor = Sensor.query.filter_by(name='temperature').first()
-    temp_data = Data.query.filter_by(sensor_id=temp_sensor.id).all()
+@weather_data.route('/weather_data/graph/<string:sensor>')
+def graph(sensor):
+    sensor = Sensor.query.filter_by(name=sensor).first()
+    sensor_data = Data.query.filter_by(sensor_id=sensor.id).all()
     chart_data = []
-    for datum in temp_data:
+    for datum in sensor_data:
         entry = {'x': datum.date_recorded.strftime('%Y-%m-%d %H:%M:%S'), 'y': round(datum.value, 2)}
         chart_data.append(entry)
-    return render_template('temperature_graph.html', chart_data=chart_data)
+    return render_template('sensor_graph.html', chart_data=chart_data)
