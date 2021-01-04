@@ -11,7 +11,7 @@
           data: {
             datasets: [
                 {
-                label: 'Chart 1',
+                label: '{{ title }}',
                 data: {{ chart_data | tojson }},
                 showLine: true,
                 fill: false,
@@ -34,11 +34,19 @@
                 type: 'time',
                 time: {
                   unit: 'minute'
+                },
+                scaleLabel: {
+                display: true,
+                labelString: 'Date'
                 }
               }],
               yAxes: [{
                 ticks: {
                   beginAtZero:false
+                },
+                scaleLabel: {
+                display: true,
+                labelString: '{{ unit }}'
                 }
               }]
 
