@@ -157,3 +157,12 @@ def getsensors():
     sensors = Sensor.query.paginate(per_page=25)
     page = request.args.get('page', 1, type=int)
     return render_template('admin_sensors_dashboard.html', sensors=sensors, page=page, form=form, page_context='admin.getsensors')
+
+
+@admin.route('/admin/sensors/<string:sensor>')
+@admin_permission.require(http_exception=403)
+def getsensordata(sensor):
+    sensor = Sensor.query.filter_by(name=sensor).first()
+    data = Data.query.filter_by(sensor_id=sensor.id).order_by(Data.date_recorded.desc()).paginate(per_page=100)
+    page = request.args.get('page', 1, type=int)
+    return render_template('admin_data_dashboard.html', data=data, sensor=sensor, page=page, page_context='admin.getsensordata')

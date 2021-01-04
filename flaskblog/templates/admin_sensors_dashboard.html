@@ -46,7 +46,7 @@
         <tbody>
             {% for sensor in sensors.items %}
                 <tr>
-                    <td>{{ sensor.name }}</td>
+                    <td><a href="{{ url_for('admin.getsensordata', sensor=sensor.name) }}">{{ sensor.name }}</a></td>
                     <td>{{ sensor.unit }}</td>
                 </tr>
             {% endfor %}

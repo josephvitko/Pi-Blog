@@ -1,0 +1,31 @@
+{% extends "layout_admin.html" %}
+{% block midsection %}
+    <h1>{{ sensor.name }}, {{ sensor.unit }}</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Value</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for datum in data.items %}
+                <tr>
+                    <td>{{ datum.name }}</td>
+                    <td>{{ datum.date_recorded }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% for page_num in data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if data.page == page_num %}
+                <a class="btn btn-primary mb-4" href="{{ url_for(page_context, page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for(page_context, page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+    {% endfor %}
+{% endblock midsection %}
