@@ -191,6 +191,7 @@ def deletesensordatum(id, sensor):
 @admin.route('/admin/sensors/<string:sensor>/clear')
 @admin_permission.require(http_exception=403)
 def clearsensordata(sensor):
+    sensor = Sensor.query.filter_by(name=sensor).first()
     Data.query.filter_by(sensor_id=sensor.id).delete()
     db.session.commit()
     flash('Data has been cleared', 'success')

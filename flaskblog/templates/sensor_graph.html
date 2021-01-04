@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-    <canvas id="myChart"></canvas>
+    <canvas width="400" height="300" id="myChart"></canvas>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
     <script>
@@ -33,7 +33,7 @@
                 xAxes: [{
                 type: 'time',
                 time: {
-                  unit: 'minute'
+                  unit: 'hour'
                 },
                 scaleLabel: {
                 display: true,
