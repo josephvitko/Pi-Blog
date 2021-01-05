@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Graphs</h2>
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Office Raspberry Pi:</legend>
+        <a href="{{ url_for('weather_data.graph', sensor='temperature_cal') }}" class="btn btn-block btn-outline-info">Temperature (calibrated)</a>
+        <a href="{{ url_for('weather_data.graph', sensor='temperature') }}" class="btn btn-block btn-outline-info">Temperature (recorded)</a>
+        <a href="{{ url_for('weather_data.graph', sensor='piCpuTemperature') }}" class="btn btn-block btn-outline-info">CPU Temperature</a>
+        <a href="{{ url_for('weather_data.graph', sensor='pressure') }}" class="btn btn-block btn-outline-info">Air Pressure</a>
+        <a href="{{ url_for('weather_data.graph', sensor='humidity') }}" class="btn btn-block btn-outline-info">Humidity</a>
+    </fieldset>
+{% endblock content %}

@@ -22,7 +22,7 @@
                     </td>
                     <td>{{ post.date_posted.strftime("%m-%d-%Y, %H:%M") }}</td>
                     <td>
-                        <a role="button" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove Post" href="{{ url_for('admin.removepost', id=post.id) }}">
+                        <a role="button" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="bottom" title="Remove Post" href="{{ url_for('admin.removepost', id=post.id) }}">
                             <i class="fas fa-trash"></i>
                         </a>
                     </td>

@@ -23,10 +23,10 @@
                     </td>
                     <td>{{ user.email }}</td>
                     <td>
-                        <a role="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="User Settings" href="{{ url_for('admin.viewuser', user=user.username) }}">
+                        <a role="button" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="User Settings" href="{{ url_for('admin.viewuser', user=user.username) }}">
                             <i class="fas fa-cog"></i>
                         </a>
-                        <a role="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="User Posts" href="{{ url_for('admin.getuserposts', user=user.username) }}">
+                        <a role="button" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="User Posts" href="{{ url_for('admin.getuserposts', user=user.username) }}">
                             <i class="fas fa-comment-alt"></i>
                         </a>
                     </td>

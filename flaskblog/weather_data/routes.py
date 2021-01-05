@@ -48,3 +48,7 @@ def graph(sensor):
         entry = {'x': datum.date_recorded.strftime('%Y-%m-%d %H:%M:%S'), 'y': round(datum.value, 2)}
         chart_data.append(entry)
     return render_template('sensor_graph.html', chart_data=chart_data, title=sensor.name.capitalize(), unit=sensor.unit)
+
+@weather_data.route('/weather_data/graph')
+def graph_dashboard():
+    return render_template('graph_dashboard.html')
