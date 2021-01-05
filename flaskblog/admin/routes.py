@@ -4,6 +4,7 @@ from flaskblog.models import User, Role, UserRoles, Post
 from flaskblog.admin.forms import RoleForm, SensorForm
 from flaskblog.permissions import admin_permission
 from flaskblog.weather_data.models import Sensor, Data
+from flaskblog.productivity_data.models import ProductivityData
 
 admin = Blueprint('admin', __name__)
 
@@ -163,7 +164,7 @@ def getsensors():
 @admin_permission.require(http_exception=403)
 def getsensordata(sensor):
     sensor = Sensor.query.filter_by(name=sensor).first()
-    data = Data.query.filter_by(sensor_id=sensor.id).order_by(Data.date_recorded.desc()).paginate(per_page=50)
+    data = Data.query.filter_by(sensor_id=sensor.id).order_by(Data.date_recorded.desc()).paginate(per_page=250)
     page = request.args.get('page', 1, type=int)
     return render_template('admin_data_dashboard.html', data=data, sensor=sensor, page=page, page_context='admin.getsensordata')
 
@@ -196,3 +197,11 @@ def clearsensordata(sensor):
     db.session.commit()
     flash('Data has been cleared', 'success')
     return redirect(url_for('admin.getsensors'))
+
+
+@admin.route('/admin/productivity_data')
+@admin_permission.require(http_exception=403)
+def getproductivitydata():
+    p_data = ProductivityData.query.order_by(ProductivityData.date.desc()).paginate(per_page=28)
+    page = request.args.get('page', 1, type=int)
+    return render_template('admin_productivitydata_dashboard.html', data=p_data, page=page, page_context='admin.getproductivitydata')

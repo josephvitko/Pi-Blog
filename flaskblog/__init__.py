@@ -29,20 +29,21 @@ def create_app(config_class=Config):
     from flaskblog.users.routes import users
     from flaskblog.posts.routes import posts
     from flaskblog.main.routes import main
-    from flaskblog.api.routes import api
     from flaskblog.admin.routes import admin
     from flaskblog.weather_data.routes import weather_data, DataAPI, SensorAPI
+    from flaskblog.productivity_data.routes import productivity_data, ProductivityDataAPI
     from flaskblog.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
-    app.register_blueprint(api)
     app.register_blueprint(admin)
     app.register_blueprint(weather_data)
+    app.register_blueprint(productivity_data)
     app.register_blueprint(errors)
 
     rest_api.add_resource(DataAPI, '/api/weather_data')
     rest_api.add_resource(SensorAPI, '/api/sensor')
+    rest_api.add_resource(ProductivityDataAPI, '/api/productivity_data')
     rest_api.init_app(app)
 
     @identity_loaded.connect_via(app)

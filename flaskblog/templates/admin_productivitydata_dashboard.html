@@ -1,0 +1,38 @@
+{% extends "layout_admin.html" %}
+{% block midsection %}
+    <h1>Productivity Data</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Prod. Hrs</th>
+                <th>Unprod. Hrs</th>
+                <th>Efficiency</th>
+                <th>Output</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for datum in data.items %}
+                <tr>
+                    <td>{{ datum.date }}</td>
+                    <td>{{ "%.1f"|format(datum.hours_prod) }}</td>
+                    <td>{{ "%.1f"|format(datum.hours_dist) }}</td>
+                    <td>{{ "%.1f"|format(datum.efficiency() * 100) }}%</td>
+                    <td>{{ "%.1f"|format(datum.output() * 100) }}%</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% for page_num in data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if data.page == page_num %}
+                <a class="btn btn-primary mb-4" href="{{ url_for(page_context, page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for(page_context, page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+    {% endfor %}
+{% endblock midsection %}
